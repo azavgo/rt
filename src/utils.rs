@@ -9,8 +9,8 @@ pub fn to_canvas(size: Size) -> Vec<Vec<Colour>> {
     let mut r = 0;
     let mut g = 0;
     let mut b: u8 = 0;
-    for i in 0..size.w() {
-        for j in 0..size.h() {
+    for j in 0..size.h() {
+        for i in 0..size.w() {
             r = i as u8;
             g = j as u8;
             b = 63;
@@ -23,6 +23,7 @@ pub fn to_canvas(size: Size) -> Vec<Vec<Colour>> {
 pub fn to_file(filename: String, canvas: Vec<Vec<Colour>>, size: Size) -> Result<(), Error> {
     let mut ppm_image = format!("P3\n{} {}\n255\n", size.w(), size.h());
     for j in 0..size.w() {
+        print!("Rendering image: {}%\r", &j*100/255); 
         for i in 0..size.h() {
             ppm_image = format!(
                 "{}{} {} {}\n",
