@@ -22,20 +22,3 @@ impl Colour {
         self.b
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    #[test]
-    fn test_new_colour() {
-        assert_eq!(Colour { r: 255, g: 0, b: 0 }, Colour::new(255, 0, 0));
-    }
-
-    #[test]
-    fn test_colour_rgb() {
-        let c = Colour::new(236, 13, 159);
-        assert_eq!(236, Colour::r(&c));
-        assert_eq!(13, Colour::g(&c));
-        assert_eq!(159, Colour::b(&c));
-    }
-}

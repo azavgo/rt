@@ -3,6 +3,7 @@ use std::io::Error;
 mod size;
 mod utils; 
 mod colour;
+mod geometry; 
 
 
 use size::Size;
