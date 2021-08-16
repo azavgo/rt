@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul, Sub, Div};
+use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Point {
@@ -85,6 +85,19 @@ impl Vector {
 
     pub fn length(self) -> f32 {
         (self * self).sqrt()
+    }
+
+    pub fn cross(v1: Vector, v2: Vector) -> Vector {
+        let x1 = v1.point().x();
+        let y1 = v1.point().y();
+        let z1 = v1.point().z();
+
+        let x2 = v2.point().x();
+        let y2 = v2.point().y();
+        let z2 = v2.point().z();
+
+        let p = Point::new(y1 * z2 - z1 * y2, z1 * x2 - x1 * z2, x1 * y2 - y1 * x2);
+        Vector::new(p)
     }
 }
 
