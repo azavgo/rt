@@ -1,3 +1,5 @@
+mod vec3; 
+
 use std::fs::write; 
 
 fn main() {
