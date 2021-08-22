@@ -7,8 +7,8 @@ pub struct Vec3 {
     e2: f64,
 }
 
-type Point3 = Vec3;
-type Color = Vec3;
+pub type Point3 = Vec3;
+pub type Colour = Vec3;
 
 impl Vec3 {
     pub fn new(e0: f64, e1: f64, e2: f64) -> Self {
@@ -131,5 +131,16 @@ impl Div<f64> for Vec3 {
     type Output = Self;
     fn div(self, other: f64) -> Self {
         Self::new(self.x() / other, self.y() / other, self.z() / other)
+    }
+}
+
+impl Colour {
+    pub fn write_colour(self) -> String {
+        format!(
+            "{} {} {}",
+            (self.x() * 255.99) as u8,
+            (self.y() * 255.99) as u8,
+            (self.z() * 255.99) as u8
+        )
     }
 }

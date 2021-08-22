@@ -1,27 +1,22 @@
-mod vec3; 
+mod vec3;
 
-use std::fs::write; 
+use std::fs::write;
+use vec3::Colour;
 
 fn main() {
     let mut ppm_image = format!("P3\n{} {}\n255\n", 256, 256);
-    
-    let mut r: f64 = 0.0; 
-    let mut g: f64 = 0.0;
-    let mut b: f64 = 0.0;
-    
+
+    let mut pixel_colour = Colour::e();
+
     for j in (0..256).rev() {
         print!("Rendering image: {}%\r", (255 - &j) * 100 / 255);
         for i in 0..256 {
-            r = i as f64/255.0; 
-            g = j as f64/255.0;
-            b = 0.25; 
-            
+            pixel_colour = Colour::new(i as f64 / 255.0, j as f64 / 255.0, 0.25);
+
             ppm_image = format!(
-                "{}{} {} {}\n",
+                "{}{}\n",
                 ppm_image,
-                (255.99 * r) as u8,
-                (255.99 * g) as u8,
-                (255.99 * b) as u8
+                pixel_colour.write_colour()
             );
         }
     }
