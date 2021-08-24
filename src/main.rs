@@ -1,20 +1,50 @@
-mod vec3;
+mod ray;
+
+use ray::Ray;
+use crate::ray::vec3::{Vec3, Point3, Colour};
 
 use std::fs::write;
-use vec3::Colour;
 
-const IMAGE_WIDTH: usize = 256;
-const IMAGE_HEIGHT: usize = 256;
+
+
+const ASPECT_RATIO: f64 = 16.0 / 9.0;
+const IMAGE_WIDTH: usize = 400;
+const IMAGE_HEIGHT: usize = (IMAGE_WIDTH as f64 / ASPECT_RATIO) as usize;
 
 fn main() {
-    let mut ppm_image = format!("P3\n{} {}\n255\n", 256, 256);
+    //Camera
+    let viewport_height = 2.0;
+    let viewport_width = ASPECT_RATIO * viewport_height;
+    let focal_length = 1.0;
 
+    let origin = Point3::e();
+    let horizontal = Vec3::new(viewport_width, 0.0, 0.0);
+    let vertical = Vec3::new(0.0, viewport_height, 0.0);
+    let lower_left_corner =
+        origin - horizontal / 2.0 - vertical / 2.0 - Vec3::new(0.0, 0.0, focal_length);
+
+    //Render
+
+    let mut ppm_image = format!("P3\n{} {}\n255\n", IMAGE_WIDTH, IMAGE_HEIGHT);
+    let mut u = 0.0;
+    let mut v = 0.0;
+    let mut r = Ray::new(origin, Vec3::e());
     let mut pixel_colour = Colour::e();
 
     for j in (0..IMAGE_HEIGHT).rev() {
-        print!("Rendering image: {}%\r", (IMAGE_HEIGHT - 1 - &j) * 100 / (IMAGE_HEIGHT - 1));
+        print!(
+            "Rendering image: {}%\r",
+            (IMAGE_HEIGHT - 1 - &j) * 100 / (IMAGE_HEIGHT - 1)
+        );
         for i in 0..IMAGE_WIDTH {
-            pixel_colour = Colour::new(i as f64 / (IMAGE_WIDTH-1) as f64, j as f64 / (IMAGE_HEIGHT-1) as f64, 0.25);
+            u = i as f64 / (IMAGE_WIDTH - 1) as f64;
+            v = j as f64 / (IMAGE_HEIGHT - 1) as f64;
+            r = Ray::new(
+                origin,
+                lower_left_corner + u * horizontal + v * vertical - origin,
+            );
+
+            pixel_colour = r.ray_colour(); 
 
             ppm_image = format!("{}{}\n", ppm_image, pixel_colour.write_colour());
         }
