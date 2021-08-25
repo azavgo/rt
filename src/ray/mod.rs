@@ -42,15 +42,15 @@ impl Ray {
     }
 
     pub fn hit_sphere(&self, centre: Point3, radius: f64) -> f64 {
-        let a = self.direction() * self.direction;
+        let a = self.direction() * self.direction();
         let oc = self.origin() - centre;
-        let b = 2.0 * self.direction() * oc;
+        let half_b = self.direction() * oc;
         let c = oc * oc - radius * radius;
-        let d = b * b - 4.0 * a * c;
+        let d = half_b * half_b - a * c;
         if d < 0.0 {
             -1.0
         } else {
-            (-b - d.sqrt()) / (2.0 * a)
+            (-half_b - d.sqrt()) / a
         }
     }
 }
