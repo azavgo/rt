@@ -1,7 +1,8 @@
-mod ray;
+mod hittable; 
 
-use ray::Ray;
-use crate::ray::vec3::{Vec3, Point3, Colour};
+use hittable::ray::Ray; 
+use hittable::ray::vec3::{Vec3, Point3, Colour};
+use hittable::HitRecord; 
 
 use std::fs::write;
 
