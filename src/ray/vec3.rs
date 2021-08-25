@@ -144,3 +144,26 @@ impl Colour {
         )
     }
 }
+
+#[cfg(tests)]
+mod tests;
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn dot_test() {
+        let u = Vec3::new(3.0, -2.0, 5.0);
+        let v = Vec3::new(-1.0, -2.0, 3.0);
+        let dot_product = Vec3::dot(u, v);
+        assert_eq!(16.0, dot_product);
+    }
+
+    #[test]
+    fn cross_test() {
+        let u = Vec3::new(2.0, -3.0, 4.0);
+        let v = Vec3::new(-1.0, 2.0, 3.0);
+        let cross_product = Vec3::cross(u, v);
+        assert_eq!(Vec3::new(-17.0, -10.0, 1.0), cross_product);
+    }
+}
