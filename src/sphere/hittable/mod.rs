@@ -32,6 +32,6 @@ impl HitRecord {
     }
 }
 
-pub struct Hittable {
-    //TODO: I shall need to define this struct 
+pub trait Hittable {
+    fn hit(&self, r: Ray, t_min: f64, t_max: f64, rec: HitRecord) -> bool; 
 }

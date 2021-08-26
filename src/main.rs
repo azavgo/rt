@@ -1,8 +1,8 @@
-mod hittable; 
+mod sphere; 
 
-use hittable::ray::Ray; 
-use hittable::ray::vec3::{Vec3, Point3, Colour};
-use hittable::HitRecord; 
+use sphere::hittable::ray::Ray; 
+use sphere::hittable::ray::vec3::{Vec3, Point3, Colour};
+use sphere::hittable::HitRecord; 
 
 use std::fs::write;
 
