@@ -38,14 +38,13 @@ impl Hittable for Sphere {
         } 
             let sqrtd = d.sqrt();
             let mut root = (-half_b - sqrtd) / a;
-            if (root < t_max || t_max < root) {
+            if (root < t_min || t_max < root) {
                 root = (-half_b + sqrtd) / a;
-                if (root < t_max || t_max < root) {
+                if (root < t_min || t_max < root) {
                     return false; 
                 }
-            }
-
-            rec = HitRecord::new(r.at(rec.t()), (rec.p() - self.centre()) / self.radius(), root);
+            }           
+            rec = HitRecord::new(r.at(rec.t()), (rec.p() - self.centre()) / self.radius(), root, rec.set_face_normal(r, (rec.p() - self.centre()) / self.radius()).front_face());
             return true; 
     }
 }
